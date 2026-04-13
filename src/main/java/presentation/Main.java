@@ -4,8 +4,6 @@ import domain.observer.PhaseTimingObserver;
 import infrastructure.factory.MinerFactory;
 import domain.model.FrequentItemset;
 import infrastructure.persistence.UncertainDatabase;
-import presentation.Usage;
-import domain.mining.TUFCI;
 
 import java.io.IOException;
 import java.util.List;

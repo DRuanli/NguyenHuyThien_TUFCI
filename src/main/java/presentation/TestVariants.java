@@ -59,31 +59,59 @@ public class TestVariants {
         System.out.println("  Vocabulary   : " + database.getVocabulary().size() + " unique items");
         System.out.println();
 
-        // Create miner based on variant
-        AbstractMiner miner = createMiner(variant, database, tau, k);
+        if (variant.equals("UTKFIM")) {
+            UTKFIM miner = new UTKFIM(database, tau, k);
+            System.out.println("Starting mining process...");
+            System.out.println("─".repeat(65));
 
-        System.out.println("Starting mining process...");
-        System.out.println("─".repeat(65));
+            long startTime = System.nanoTime();
+            List<FrequentItemset> results = miner.mine();
+            long endTime = System.nanoTime();
+            long executionTime = (endTime - startTime) / 1_000_000; // Convert to ms
 
-        long startTime = System.nanoTime();
-        List<FrequentItemset> results = miner.mine();
-        long endTime = System.nanoTime();
-        long executionTime = (endTime - startTime) / 1_000_000; // Convert to ms
+            System.out.println("─".repeat(65));
+            System.out.println("Mining completed!");
+            System.out.println();
 
-        System.out.println("─".repeat(65));
-        System.out.println("Mining completed!");
-        System.out.println();
+            // Display results
+            System.out.println("Performance Metrics:");
+            System.out.println("  Execution Time : " + executionTime + " ms");
+            System.out.println("  Patterns Found : " + results.size());
+            System.out.println();
 
-        // Display results
-        System.out.println("Performance Metrics:");
-        System.out.println("  Execution Time : " + executionTime + " ms");
-        System.out.println("  Patterns Found : " + results.size());
-        System.out.println();
+            System.out.println("Top-" + Math.min(k, results.size()) + " Patterns:");
+            for (int i = 0; i < Math.min(k, results.size()); i++) {
+                FrequentItemset pattern = results.get(i);
+                System.out.printf("  %2d. %s\n", (i + 1), pattern);
+            }
+        }
+        else {
+            // Create miner based on variant
+            AbstractMiner miner = createMiner(variant, database, tau, k);
 
-        System.out.println("Top-" + Math.min(k, results.size()) + " Patterns:");
-        for (int i = 0; i < Math.min(k, results.size()); i++) {
-            FrequentItemset pattern = results.get(i);
-            System.out.printf("  %2d. %s\n", (i + 1), pattern);
+            System.out.println("Starting mining process...");
+            System.out.println("─".repeat(65));
+
+            long startTime = System.nanoTime();
+            List<FrequentItemset> results = miner.mine();
+            long endTime = System.nanoTime();
+            long executionTime = (endTime - startTime) / 1_000_000; // Convert to ms
+
+            System.out.println("─".repeat(65));
+            System.out.println("Mining completed!");
+            System.out.println();
+
+            // Display results
+            System.out.println("Performance Metrics:");
+            System.out.println("  Execution Time : " + executionTime + " ms");
+            System.out.println("  Patterns Found : " + results.size());
+            System.out.println();
+
+            System.out.println("Top-" + Math.min(k, results.size()) + " Patterns:");
+            for (int i = 0; i < Math.min(k, results.size()); i++) {
+                FrequentItemset pattern = results.get(i);
+                System.out.printf("  %2d. %s\n", (i + 1), pattern);
+            }
         }
     }
 

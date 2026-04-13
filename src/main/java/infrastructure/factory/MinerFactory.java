@@ -2,7 +2,6 @@ package infrastructure.factory;
 
 import application.config.MiningConfiguration;
 import domain.mining.AbstractMiner;
-import domain.mining.TUFCI;
 import domain.support.SupportCalculator;
 import infrastructure.persistence.UncertainDatabase;
 
